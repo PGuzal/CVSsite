@@ -1,0 +1,215 @@
+
+<!-- saved from url=(0104)https://www.pythonanywhere.com/user/PatrycjaRAIM/files/home/PatrycjaRAIM/mysite/templates/statistic.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Ankieta</title>
+        <script src="./statistic_files/Chart.min.js.pobrane"></script>
+        <link rel="stylesheet" link="" href="./statistic_files/final_style.css">
+        
+    </head>
+    <body>
+        <h1> Ankieta</h1>
+        <h1 class="small">Syndrom widzenia komputerowego</h1>
+        <form class="form-style-5" method="POST">
+            <p>
+                    {% for message in get_flashed_messages() %}
+                    </p><p class="warning">{{ message }}</p>
+                    {% endfor %}
+            <p></p>
+            <br>
+            <input type="button" onclick="location.href=&#39;{{url_for(&#39;main&#39;)}}&#39;" ,="" value="Przejdź do strony głównej">
+			<br>
+			<h2>Statystyki indywidualne</h2>
+			<input type="number" placeholder="Wpisz tutaj" name="id_respondent" min="1" max="43" required="">
+            <input type="submit" value="Przejdź do statystyk indywidualnych">
+            <br><br>
+			<h3>Aby zobaczyć legendę proszę najechać kursorem na wykres.</h3>
+			<br>
+            <h3>Płeć</h3>
+            <canvas id="chart_plec" width="450" height="250"></canvas>
+            <br>
+            <h3>Wiek</h3>
+            <canvas id="chart_wiek" width="450" height="250"></canvas>
+            <br>
+            <h3>Wykształcenie</h3>
+            <canvas id="chart_wyksztalcenie" width="450" height="250"></canvas>
+            <br>
+            <h3>Wyniki quizu z wiedzy o CVS</h3>
+            <canvas id="chart_wiedza" width="450" height="250"></canvas>
+            <br>
+            <h3>Ilość używanych urządzeń</h3>
+            <canvas id="chart_urzadzenia" width="450" height="250"></canvas>
+            <br>
+            <h3>Czas spędzany przed monitorem</h3>
+            <canvas id="chart_czas" width="450" height="250"></canvas>
+            <br>
+            <h3>Robienie przerw</h3>
+            <canvas id="chart_przerwa" width="450" height="250"></canvas>
+            <br>
+            <h3>Objawy</h3>
+            <canvas id="chart_samopoczucie" width="450" height="250"></canvas>
+            <br>
+            <h3>Problemy ze wzrokiem</h3>
+            <canvas id="chart_problemy" width="450" height="250"></canvas>
+            <br>
+            <h3>Choroby</h3>
+            <canvas id="chart_choroba" width="450" height="250"></canvas>
+            <br>
+            <h3>Pogorszenie stanu oczu podczas ostatniej wizyty</h3>
+            <canvas id="chart_pogorszenie" width="450" height="250"></canvas>
+            <script>
+            var pieDataplec = [
+            {% for item, label, colors in plec %}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },{% endfor %}
+            ];
+            var mychart = document.getElementById("chart_plec").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_plec").getContext("2d")).Pie(pieDataplec);
+
+            var pieDatawiek = [
+            {% for item, label, colors in wiek %}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_wiek").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_wiek").getContext("2d")).Pie(pieDatawiek);
+
+            var pieDatawyksztalcenie = [
+            {% for item, label, colors in wyksztalcenie %}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_wyksztalcenie").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_wyksztalcenie").getContext("2d")).Pie(pieDatawyksztalcenie);
+
+            var pieDatawiedza = [
+            {% for item, label, colors in wiedza %}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },{% endfor %}
+            ];
+            var mychart = document.getElementById("chart_wiedza").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_wiedza").getContext("2d")).Pie(pieDatawiedza);
+
+            var pieDataurzadzenie = [
+            {% for item, label, colors in urzadzenia%}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_urzadzenia").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_urzadzenia").getContext("2d")).Pie(pieDataurzadzenie);
+
+            var pieDataczas = [
+            {% for item, label, colors in czas%}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_czas").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_czas").getContext("2d")).Pie(pieDataczas);
+
+            var pieDataprzerwa = [
+            {% for item, label, colors in przerwa%}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_przerwa").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_przerwa").getContext("2d")).Pie(pieDataprzerwa);
+
+            var pieDatasamopoczucie = [
+            {% for item, label, colors in samopoczucie%}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_samopoczucie").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_samopoczucie").getContext("2d")).Pie(pieDatasamopoczucie);
+
+            var pieDataproblemy = [
+            {% for item, label, colors in problemy %}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_problemy").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_problemy").getContext("2d")).Pie(pieDataproblemy);
+
+            var pieDatachoroba = [
+            {% for item, label, colors in choroba%}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_choroba").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_choroba").getContext("2d")).Pie(pieDatachoroba);
+
+            var pieDatapogorszenie = [
+            {% for item, label, colors in pogorszenie%}
+            {
+            value: {{item}},
+            label: "{{label}}",
+            color : "{{colors}}"
+            },
+            {% endfor %}
+            ];
+            var mychart = document.getElementById("chart_pogorszenie").getContext("2d");
+            steps = 10
+            max = {{ max }}
+            new Chart(document.getElementById("chart_pogorszenie").getContext("2d")).Pie(pieDatapogorszenie);
+            </script>
+        </form>
+    
+
+</body></html>

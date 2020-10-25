@@ -1,0 +1,166 @@
+
+<!-- saved from url=(0099)https://www.pythonanywhere.com/user/PatrycjaRAIM/files/home/PatrycjaRAIM/mysite/templates/form.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Ankieta</title>
+        <link rel="stylesheet" link="" href="./form_files/final_style.css">
+        
+    </head>
+    <body>
+        <h1> Ankieta</h1>
+        <h1 class="small">Syndrom widzenia komputerowego</h1>
+        <form class="form-style-5" method="POST">
+                <p>
+                    {% for message in get_flashed_messages() %}
+                    </p><p class="warning">{{ message }}</p>
+                    {% endfor %}
+                <p></p>
+
+                <p>Adres e-mail będzie wykorzystany do przekazywania informacji dotyczących wyników ankiety, uzupełnienie go jest opcjonalne. Reszta pytań do wpisywania jest obowiązkowa.</p>
+                    {% for p in pytania %}
+                    {% set nr = loop.index0 %}
+                <p>
+                    {%if nr == 0 %}
+                        <br><legend><span class="number">1</span> Pytania identyfikujące respondenta: </legend>
+                    {%elif nr == 4%}
+                        <br><legend><span class="number">2</span> Pytania oceniające wiedzę o CVS: </legend>
+                    {%elif nr  == 14 %}
+                        <br><legend><span class="number">3</span> Pytania dotyczące warunków pracy przed komputerem: </legend>
+                    {%elif nr  == 21 %}
+                        <br><legend><span class="number">4</span> Pytania dotyczące samopoczucia po pracy przed komputerem: </legend>
+                    {%elif nr  == 22%}
+                        <br><legend><span class="number">5</span> Pytania o stan zdrowia oczu: </legend>
+                    {%elif nr  == 23%}
+                        <br><legend><span class="number">6</span> Pytania dotyczące ostatniej kontroli u specjalisty: </legend>
+                    {%endif%}
+
+                </p><h2>{{p.pytanie}}</h2><br>
+                    {%if p.typ == 'I' %}
+                        <input type="number" placeholder="Wpisz tutaj" name="{{ p.nazwa }}" min="0" max="10" required="">
+                        <br>
+                    {%elif p.typ == 'W' %}
+                        <input type="number" placeholder="Wpisz tutaj" name="{{ p.nazwa }}" min="16" max="35" required="">
+                        <br>
+                    {%elif p.typ == 'E' %}
+                        <input type="email" placeholder="Wpisz tutaj" name="{{ p.nazwa }}">
+                        <br>
+                    {%elif p.typ == 'D' %}
+                        <input type="date" name="{{ p.nazwa }}" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))">
+                        <br>
+                    {%elif p.typ == 'M' %}
+                        {% for o in p.odpowiedzi %}
+                        {% set onr = loop.index0 %}
+                            <label>
+                                <input type="checkbox" value="{{ p.wartosc[onr] }}" name="{{ p.nazwa }}{{onr}}">
+                                {{ o }}
+                            </label>
+                        {% endfor %}
+                    {%elif p.typ == 'B' %}
+                        {%if nr == 20%}
+                            <label>
+                                <input type="radio" value="1" name="{{ p.nazwa }}" onclick="document.getElementById(&#39;iden&#39;).style.display = this.checked ? &#39;block&#39; : &#39;none&#39;; this.form.elements[&#39;{{p.nazwa1}}&#39;].disabled = this.form.elements[&#39;{{p.nazwa2}}&#39;].disabled = !this.checked">
+                                Tak
+                            </label>
+                            <label>
+                                <input type="radio" value="0" name="{{ p.nazwa }}" onclick="document.getElementById(&#39;iden&#39;).style.display = this.checked ? &#39;none&#39; : &#39;block&#39;; this.form.elements[&#39;{{p.nazwa1}}&#39;].disabled = this.form.elements[&#39;{{p.nazwa2}}&#39;].disabled = this.checked">
+                                Nie
+                            </label>
+                                <div id="iden" style="display: none">
+                                   <br>
+                                   <h2>{{p.podpytanie1}}</h2>
+                                   <br>
+                                   {% for o in p.odpowiedzi1 %}
+                                   {% set onr = loop.index0 %}
+	                                    <label>
+	                                        <input type="radio" value="{{ p.wartosc1[onr] }}" name="{{p.nazwa1}}">
+                                            {{ o }}
+                                        </label>
+                                   {% endfor %}
+                                   <br>
+                                   <h2>{{p.podpytanie2}}</h2>
+                                   <br>
+                                   {% for o in p.odpowiedzi2 %}
+                                   {% set onr = loop.index0 %}
+	                                    <label>
+	                                        <input type="radio" value="{{ p.wartosc2[onr] }}" name="{{p.nazwa2}}">
+                                            {{ o }}
+                                        </label>
+                                   {% endfor %}
+                                </div>
+
+                        {%elif nr ==22 %}
+                            <label>
+                                <input type="radio" value="1" name="{{ p.nazwa }}" onclick="document.getElementById(&#39;ide&#39;).style.display = this.checked ? &#39;block&#39; : &#39;none&#39;; this.form.elements[&#39;{{p.nazwa1}}&#39;].disabled = this.form.elements[&#39;{{p.nazwa2}}&#39;].disabled = !this.checked">
+                                    Tak
+                            </label>
+                            <label>
+                                <input type="radio" value="0" name="{{ p.nazwa }}" onclick="document.getElementById(&#39;ide&#39;).style.display = this.checked ? &#39;none&#39; : &#39;block&#39;; this.form.elements[&#39;{{p.nazwa1}}&#39;].disabled = this.form.elements[&#39;{{p.nazwa2}}&#39;].disabled = this.checked">
+                                Nie
+                            </label>
+                                <div id="ide" style="display: none">
+                                    <br>
+                                    <h2>{{p.podpytanie1}}</h2>
+                                    <br>
+                                    <label>
+                                    <input type="radio" value="1" name="{{ p.nazwa1 }}">
+                                    Tak
+                                    </label>
+                                   <label>
+                                    <input type="radio" value="0" name="{{ p.nazwa1 }}">
+                                    Nie
+                                    </label>
+                                    <br>
+                                    <h2>{{p.podpytanie2}}</h2>
+                                    <br>
+                                    {% for o in p.odpowiedzi2 %}
+                                    {% set ponr = loop.index0 %}
+                                        <label>
+                                            <input type="checkbox" value="{{ p.wartosc2[ponr] }}" name="{{p.nazwa2}}{{ponr}}">
+                                            {{ o }}
+                                        </label>
+                                   {% endfor %}
+                                </div>
+                            {%else%}
+                                <label>
+                                    <input type="radio" value="1" name="{{ p.nazwa }}">
+                                    Tak
+                                </label>
+                                <label>
+                                    <input type="radio" value="0" name="{{ p.nazwa }}">
+                                    Nie
+                                </label>
+                            {%endif%}
+
+                    {% else %}
+                        {%if nr == 1 or  nr == 3%}
+                            {% for o in p.odpowiedzi %}
+                            {% set onr = loop.index0 %}
+                                <label>
+                                    <input type="radio" value="{{p.wartosc[onr]}}" name="{{ p.nazwa }}">
+                                    {{ o }}
+                                </label>
+                            {% endfor %}
+                        {%elif nr &gt; 3 and nr &lt; 14%}
+                            {% for o in p.odpowiedzi %}
+                            {% set onr = loop.index0 %}
+                                <label>
+                                    <input type="radio" value="{{ onr }}" name="{{ p.nazwa }}">
+                                    {{ o }}
+                               </label>
+                            {% endfor %}
+                        {%else%}
+                            {% for o  in p.odpowiedzi %}
+                            {% set onr = loop.index0 %}
+                                <label>
+                                    <input type="radio" value="{{ p.wartosc[onr] }}" name="{{ p.nazwa }}">
+                                    {{ o }}
+                                </label>
+                            {% endfor %}
+                        {%endif%}
+                    {% endif %}
+                <br>
+                {%endfor%}
+                <p></p>
+                <input type="submit" value="Zakończ">
+            </form>
+    
+</body></html>
